@@ -2347,6 +2347,7 @@ void CGameMovement::PlaySwimSound()
 //-----------------------------------------------------------------------------
 bool CGameMovement::CheckJumpButton( void )
 {
+	
 	if (player->pl.deadflag)
 	{
 		mv->m_nOldButtons |= IN_JUMP ;	// don't jump again until released
@@ -2397,10 +2398,10 @@ bool CGameMovement::CheckJumpButton( void )
 	if ( player->m_Local.m_bSlowMovement )
 		return false;
 #endif
-
+	/*
 	if ( mv->m_nOldButtons & IN_JUMP )
 		return false;		// don't pogo stick
-
+		*/
 	// Cannot jump will in the unduck transition.
 	if ( player->m_Local.m_bDucking && (  player->GetFlags() & FL_DUCKING ) )
 		return false;
@@ -2427,7 +2428,7 @@ bool CGameMovement::CheckJumpButton( void )
 	if ( g_bMovementOptimizations )
 	{
 #if defined(HL2_DLL) || defined(HL2_CLIENT_DLL)
-		Assert( GetCurrentGravity() == 600.0f );
+		Assert( GetCurrentGravity() == 800.0f );
 		flMul = 160.0f;	// approx. 21 units.
 #else
 		Assert( GetCurrentGravity() == 800.0f );
