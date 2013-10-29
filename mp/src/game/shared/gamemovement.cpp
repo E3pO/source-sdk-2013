@@ -2341,7 +2341,6 @@ void CGameMovement::PlaySwimSound()
 	MoveHelper()->StartSound( mv->GetAbsOrigin(), "Player.Swim" );
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -2398,10 +2397,14 @@ bool CGameMovement::CheckJumpButton( void )
 	if ( player->m_Local.m_bSlowMovement )
 		return false;
 #endif
-	/*
-	if ( mv->m_nOldButtons & IN_JUMP )
-		return false;		// don't pogo stick
-		*/
+	ConVar *pDoubleJump  = cvar->FindVar( "sv_double_jump" ); //SURFSOURCETODO: This should probably be cached and not looked up every single jump..
+ 
+	if ( pDoubleJump && pDoubleJump->GetInt() == 0 ){
+		if ( mv->m_nOldButtons & IN_JUMP ){
+			return false;		// don't pogo stick
+		}
+	}
+	
 	// Cannot jump will in the unduck transition.
 	if ( player->m_Local.m_bDucking && (  player->GetFlags() & FL_DUCKING ) )
 		return false;
